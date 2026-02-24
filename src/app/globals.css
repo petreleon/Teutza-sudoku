@@ -1,0 +1,187 @@
+:root {
+  --background: #fff0f5; /* LavenderBlush */
+  --foreground: #4a0026;
+  --primary-pink: #ff69b4; /* HotPink */
+  --secondary-pink: #ffb6c1; /* LightPink */
+  --accent-pink: #db7093; /* PaleVioletRed */
+  --border-color: #ff69b4;
+  --cell-bg: #fff;
+  --cell-fixed: #4a0026;
+  --cell-input: #db7093;
+  --cell-selected: #ff69b4; /* Brighter pink for focus */
+  --cell-related: #fff5f8; 
+  --cell-same-num: #ffd1e8;
+  --cell-conflict: #ff4d4f; /* Red for visible mistakes */
+  --button-hover: #ff1493;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  width: 95%;
+  margin: 20px auto;
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: 30px;
+  box-shadow: 0 15px 40px rgba(255, 105, 180, 0.15);
+}
+
+h1 {
+  color: var(--primary-pink);
+  margin-bottom: 30px;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.sudoku-grid {
+  display: grid;
+  border: 5px solid var(--border-color);
+  margin: 20px auto;
+  width: fit-content;
+  background-color: var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(255, 105, 180, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.sudoku-grid.won {
+  transform: scale(1.02);
+  border-color: #ffb7c5;
+}
+
+.sudoku-cell {
+  width: 50px;
+  height: 50px;
+  background-color: var(--cell-bg);
+  border: 0.5px solid var(--secondary-pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* Persistent hover effect */
+.sudoku-cell:hover {
+  background-color: var(--cell-related);
+  filter: brightness(0.98);
+}
+
+.sudoku-cell.selected {
+  background-color: var(--cell-selected) !important;
+  color: white !important;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+  transform: scale(1.05);
+  z-index: 2;
+  border-radius: 4px;
+}
+
+.sudoku-cell.related {
+  background-color: var(--cell-related);
+}
+
+.sudoku-cell.same-number {
+  background-color: var(--cell-same-num);
+}
+
+.sudoku-cell.fixed {
+  color: #4a0026;
+  font-weight: 700;
+}
+
+.sudoku-cell.user-input {
+  color: #db7093;
+}
+
+/* Visible mistakes only */
+.sudoku-cell.conflict {
+  color: var(--cell-conflict) !important;
+  background-color: #fff1f0;
+}
+
+/* Win Animation */
+.sudoku-cell.won-cell {
+  animation: celebrate 0.8s ease forwards;
+  border-color: transparent;
+}
+
+@keyframes celebrate {
+  0% { transform: scale(1); background-color: white; }
+  50% { transform: scale(1.1); background-color: var(--primary-pink); color: white; }
+  100% { transform: scale(1); background-color: #fff0f5; color: var(--primary-pink); }
+}
+
+/* For larger grids, adjust cell size */
+.grid-16x16 .sudoku-cell {
+  width: 25px;
+  height: 25px;
+  font-size: 0.8rem;
+}
+
+.grid-6x6 .sudoku-cell {
+  width: 60px;
+  height: 60px;
+  font-size: 1.8rem;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+button {
+  background-color: var(--primary-pink);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.2);
+}
+
+button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 105, 180, 0.3);
+}
+
+select {
+  padding: 10px 20px;
+  border: 2px solid var(--secondary-pink);
+  border-radius: 12px;
+  background-color: white;
+  color: var(--foreground);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.timer {
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--accent-pink);
+  margin-bottom: 25px;
+  font-variant-numeric: tabular-nums;
+}
